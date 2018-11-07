@@ -33,11 +33,11 @@ int main(void)
    {
        if (fahr > 75)
             {
-                TA1CCR0 = 0xFF;
+                TA0CCR1 = 0xFF;
             }
             else
             {
-                TA1CCR0 = 0x00;
+                TA0CCR1 = 0x00;
             }
        __delay_cycles(10000);
        ADC12CTL0 |= ADC12SC;                   // Start sampling/conversion
@@ -132,7 +132,7 @@ void __attribute__ ((interrupt(ADC12_VECTOR))) ADC12_ISR (void)
   case  6:     // Vector  6:  ADC12IFG0
       while (!(UCA1IFG&UCTXIFG));
       doMath();
-      UCA1TXBUF =  (char) fahr; // transmit value in ADC
+      UCA1TXBUF =  (unsigned short int) fahr; // transmit value in ADC
 
     __bic_SR_register_on_exit(LPM0_bits);   // Exit active CPU
   case  8: break;                           // Vector  8:  ADC12IFG1
